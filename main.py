@@ -134,6 +134,36 @@ def SendEmail(cursor, connection):
     connection.commit()
 
 
+def emailingtomany(cursor, connection):
+    input1 = input('please enter emailgetter \n')
+    input2 = input('please enter ccgetter \n ')
+    input3 = input('please enter subject \n')
+    input4 = input('please enter textOfEmail \n')
+
+    # arguments = (input1, input2, input3, input4, input5)
+    # cursor.callproc('emailingtomany', arguments)
+    # connection.commit()
+
+    input1 = input1.split(',')
+
+    for i in range(len(input1)):
+        arguments = (input3, input1[i], '0', input4)
+        cursor.callproc('sendemail', arguments)
+        connection.commit()
+
+    input2=input2.split(',')
+    for i in range(len(input2)):
+        arguments = (input3, '0',input2[i], input4)
+        cursor.callproc('sendemail', arguments)
+        connection.commit()
+
+
+
+
+
+
+
+
 if __name__ == "__main__":
     connection = mysql.connector.connect(host="localhost",
                                          user="root",
@@ -141,4 +171,5 @@ if __name__ == "__main__":
 
     cursor = connection.cursor()
 
-    main_process(cursor, connection)
+    # main_process(cursor, connection)
+    emailingtomany(cursor, connection)
