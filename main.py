@@ -46,7 +46,7 @@ def log_in(cursor, connection):
     b = input('enter your password \n ')
 
     arguments = (a, b)
-    cursor.callproc('login', arguments)
+    cursor.callproc('Authentication', arguments)
     connection.commit()
 
     for result in cursor.stored_results():
@@ -158,6 +158,22 @@ def emailingtomany(cursor, connection):
         connection.commit()
 
 
+def getnews(cursor,connection):
+    arguments = ()
+    cursor.callproc('getnews', arguments)
+    connection.commit()
+
+def blockuser(cursor,connection):
+    input1=input('please enter usename of the person you want to block \n')
+    arguments= (input1, )
+    cursor.callproc('BlockUser',arguments)
+    connection.commit()
+def getMyinformation(cursor,connection):
+    arguments= ()
+    cursor.callproc('getinformation',arguments)
+    connection.commit()
+    for result in cursor.stored_results():
+        print(result.fetchall())
 
 
 
@@ -171,5 +187,8 @@ if __name__ == "__main__":
 
     cursor = connection.cursor()
 
+
     # main_process(cursor, connection)
-    emailingtomany(cursor, connection)
+    # emailingtomany(cursor, connection)
+    # blockuser(cursor,connection)
+    getMyinformation(cursor,connection)
